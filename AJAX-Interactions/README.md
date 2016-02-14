@@ -1,6 +1,8 @@
 CS290-webdev
 Used for class at Oregon State University, CS290 Web Development
 
+API used: http://openweathermap.org/api
+
 This weeks assignment is going to be graded as an assignment. It will be pass/fail based on effort. This is not to imply that it is not important. This material is absolutely critical and you will not be able to do much in the next portion of class if you are unable to write this kind of program.
 
 However, it is also quite challenging and it is not uncommon to not get it working all the way within a week the first time you are doing it.
