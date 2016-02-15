@@ -6,8 +6,8 @@
     Process to format URLs for submission
     omwURL + cityJoin + countryCode + apiJoin + apiKey
     omwURL + zipJoin  + countryCode + apiJoin + apiKey
-
  */
+
 document.addEventListener('DOMContentLoaded', bindButtons);
 
 function bindButtons() {
@@ -68,8 +68,8 @@ function bindButtons() {
         // add listener to store JSON data in results if it successfully loads
         request.addEventListener('load', function() {
             if (request.status >= 200 && request.status < 400) {
-                result = request.responseText;
-                console.log(JSON.parse(result));
+                result = JSON.parse(request.responseText);
+                console.log(result);
             }
 
             // display an error if it fails to load
@@ -78,16 +78,24 @@ function bindButtons() {
             }
         });
 
+
         // send string to Open Weather Map
-        request.send(JSON.stringify(payload));
+        request.send(null);
+
 
         // Pause event
         event.preventDefault();
+
     })
 }
 
 // To add to HTML
 // INCOMPLETE
-function outputWeatherData() {
-    document.getElementById("span-city").textContent = result.name;
-}
+
+
+
+
+
+
+
+
