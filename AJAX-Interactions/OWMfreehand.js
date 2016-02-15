@@ -8,8 +8,6 @@
     omwURL + zipJoin  + countryCode + apiJoin + apiKey
  */
 
-document.addEventListener('DOMContentLoaded', bindButtons);
-
 function bindButtons() {
     document.getElementById('submit_data').addEventListener('click', function(event) {
         // generate AJAX request
@@ -29,6 +27,7 @@ function bindButtons() {
         var zip = document.getElementById("zip").value;
         var countryCode = ',us';
         var apiJoin = '&appid=';
+
         // Old key from lectures: var apiKey = 'fa7d80c48643dfadde2cced1b1be6ca1';
         // New key, kind broken, might protect me from robots
         var apiKey = '94365262';
@@ -44,8 +43,8 @@ function bindButtons() {
          omwURL + zipJoin  + countryCode + apiJoin + apiKey
         */
 
-        // If zip is empty, use city and state
-        if (zip === '') {
+        // If zip is empty or incomplete, use city and state
+        if (zip === '' || zip.length <= 4) {
             payload = owmURL + cityJoin + city + state + apiJoin + apiKey;
         }
 
@@ -55,46 +54,78 @@ function bindButtons() {
         }
 
         // For debugging
-        console.log("*  -  *  -  *  -  *  -  *  -  *  -  *  -  *")
         console.log("City is: ", city);
         console.log("State is: ", state);
         console.log("Zip is: ", zip);
         console.log("Complete URL: ", payload);
-        console.log("*  -  *  -  *  -  *  -  *  -  *  -  *  -  *")
 
         // open and send async. request in required format
         request.open('GET', payload, true);
 
         // add listener to store JSON data in results if it successfully loads
-        request.addEventListener('load', function() {
-            if (request.status >= 200 && request.status < 400) {
-                result = JSON.parse(request.responseText);
-                console.log(result);
-            }
-
-            // display an error if it fails to load
-            else {
-                console.log("Error in network: " + result.statusText);
-            }
-        });
-
-
-        // send string to Open Weather Map
+        request.addEventListener('load', displayAPIResults);
         request.send(null);
 
-
-        // Pause event
+        // stop event from auto-refreshing
         event.preventDefault();
-
     })
 }
 
-// To add to HTML
-// INCOMPLETE
+// To add to HTML table
+function displayAPIResults(response) {
+    console.log("Printing response: ", response);
+
+    var rJSON;
+
+    if(response.srcElement.status >= 200 && response.srcElement.status < 400) {
+        rJSON = JSON.parse(response.srcElement.responseText);
+        console.log(rJSON);
+    }
+
+    // Add gathered data to website
+    document.getElementById("owm_name").textContent = rJSON.name;
+    document.getElementById("owm_main_temp").textContent = kelvinToFahrenheit(rJSON.main.temp) + "F";
+    document.getElementById("owm_weather_description").textContent = rJSON.weather[0].description;
+    document.getElementById("owm_main_humidity").textContent = rJSON.main.humidity + "%";
+    document.getElementById("owm_wind_speed").textContent = msTomph(rJSON.wind.speed);
+    document.getElementById("owm_sunrise").textContent = timeConverter(rJSON.sys.sunrise);
+    document.getElementById("owm_sunset").textContent = timeConverter(rJSON.sys.sunset);
+}
+
+// converts UNIX time to user's local time
+// inspired by answer @ http://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    return (hour + ':' + min + ':' + sec);
+}
+
+// converts kelvin to fahrenheit
+// inspired by basic math
+function kelvinToFahrenheit(kelvin) {
+    var f = (kelvin * (9/5) - 459.67);
+    f = f.toFixed(2);
+    return f;
+}
+
+// converts m/s to m/h
+// inspired by super basic math
+function msTomph (speed) {
+    speed = speed * 2.2369362620544;
+    speed = speed.toFixed(2);
+    return speed;
+}
 
 
+// init
+function init() {
+    document.addEventListener('DOMContentLoaded', bindButtons);
+}
 
-
+// get things going
+init();
 
 
 
