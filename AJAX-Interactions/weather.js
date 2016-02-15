@@ -126,7 +126,3 @@ function init() {
 
 // get things going
 init();
-
-
-
-
