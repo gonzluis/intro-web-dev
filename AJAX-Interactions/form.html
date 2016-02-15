@@ -2,14 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>POST Async, and Magic!</title>
 </head>
 <body>
-<h1>
+<h1>Submit Weather Data</h1>
+<h3>
     <a href="weather.html">Check the weather!</a>
     <br>
-    <a href="form.html">Submit information to the server!</a>
-</h1>
+    <a href="form.html">Submit weather information!</a>
+</h3>
+
+<h5>POST Form</h5>
+
+<div id="form_input">
+    <form>
+        <label>Name/Zip:
+            <input type="text" name="form_city" id="form_city" size="20">
+        </label>
+        <br>
+
+        <label>Temperature:
+            <input type="text" name="form_temperature" id="form_temperature" size="20">
+        </label>
+        <br>
+
+        <label>Weather (description):
+            <input type="text" name="form_weather" id="form_weather" size="20">
+        </label>
+        <br>
+
+        <label>Humidity:
+            <input type="text" name="form_humidity" id="form_humidity" size="20">
+        </label>
+        <br>
+
+        <label>Wind Speed:
+            <input type="text" name="form_wind" id="form_wind" size="20">
+        </label>
+        <br>
+        <button type="submit" id="button_submit">HTTP BIN SUBMIT</button>
+    </form>
+</div>
+
+
+
+<div id="form_response">
+
+</div>
 
 
 <script src="form.js"></script>
