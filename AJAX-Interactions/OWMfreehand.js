@@ -51,6 +51,7 @@ function bindButtons() {
         }
 
         // For debugging
+        console.log("*  -  *  -  *  -  *  -  *  -  *  -  *  -  *")
         console.log("City is: ", city);
         console.log("State is: ", state);
         console.log("Zip is: ", zip);
