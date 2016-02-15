@@ -56,6 +56,8 @@ function bindButtons() {
         console.log("State is: ", state);
         console.log("Zip is: ", zip);
         console.log("Complete URL: ", payload);
+        console.log("*  -  *  -  *  -  *  -  *  -  *  -  *  -  *")
+
 
 
         // The next 4 lines are pretty messy......
