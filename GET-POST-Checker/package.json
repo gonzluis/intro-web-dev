@@ -1,0 +1,22 @@
+{
+  "name":         "get-post-check",
+  "version":      "1.0.0",
+  "description":  "Display data received after GET and POST requests",
+  "main":         "index.js",
+  "scripts": {
+    "test":       "test"
+  },
+  "repository": {
+    "type":       "git",
+    "url":        "https://github.com/FearJoy/CS290-webdev/tree/master/GET-POST-Checker"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.11.3",
+    "mysql": "^2.8.0"
+  },
+  "author":       "John Fitzpatrick",
+  "license":      "MIT"
+}
