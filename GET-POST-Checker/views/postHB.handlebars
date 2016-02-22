@@ -1,0 +1,24 @@
+<h1>POST Request Received</h1>
+<h3>By: John Fitzpatrick</h3>
+
+<!-- POST formatting below -->
+{{#if found}}
+<table border="1px">
+  <caption><b>Query String Parameters Sent</b></caption>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each found}}
+    <tr>
+      <td>{{this.name}}</td>
+      <td>{{this.value}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/if}}

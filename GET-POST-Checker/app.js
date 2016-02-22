@@ -12,8 +12,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var handlebars = require ("express-handlebars").create({defaultLayout:'main'});
 
-
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // INIT express enngine
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -22,8 +20,6 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', port);
 var options = { root: __dirname + '/' };
-
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set express to use middleware(bodyParser)
@@ -59,6 +55,17 @@ app.get('/get',function(req,res){
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // POST request @ /post, formatted by postHB
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app.post('/post', function(req,res) {
+  var parameters = [];
+  for (var param in req.body) {
+    parameters.push({'name':param, 'value':req.body[param]});
+  }
+  console.log(parameters);
+  console.log(req.body);
+  var data = {};
+  data.found = parameters;
+  res.render('postHB', data);
+});
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Error Handling for 404 and 500
@@ -73,8 +80,6 @@ app.use(function(err, req, res, next){
     res.status(500);
     res.render('500');
 });
-
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set server to listen for requests on var port
