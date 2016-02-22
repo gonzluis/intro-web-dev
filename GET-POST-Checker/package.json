@@ -3,14 +3,16 @@
   "version":      "1.0.0",
   "description":  "Display data received after GET and POST requests",
   "main":         "app.js",
-  "scripts": {
 
+  "scripts": {
     "start":      "node app.js"
   },
+
   "repository": {
     "type":       "git",
     "url":        "www.na.com"
   },
+
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.2",
@@ -18,6 +20,7 @@
     "express-session": "^1.11.3",
     "mysql": "^2.8.0"
   },
+
   "author":       "John Fitzpatrick",
   "license":      "MIT"
 }
