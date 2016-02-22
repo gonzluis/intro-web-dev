@@ -27,47 +27,51 @@ var options = { root: __dirname + '/' };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set express to use middleware(bodyParser)
-//    parse application/x-www-form-urlencoded = false
-//    parse application/json = true
+//    parse application/x-www-form-urlencoded = handle URL encoded submissions
+//    parse application/json = handle JSON submissions
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Initial landing page from index.handlebars
+// Initial landing page @ /, formatted by indexHB
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res,next) {
-  res.render('index');      // index.handlebars
+  res.render('indexHB');      // index.handlebars
 });
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// GET request
+// GET request @ /get, formatted by getHB
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app.get('/get',function(req,res){
+  var parameters = [];
+
+  for (var param in req.query){
+    parameters.push({'name':param,'value':req.query[param]});
+  }
+
+  var data = {};
+  data.found = parameters;
+  res.render('getHB', data);
+});
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// POST request @ /post, formatted by postHB
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// POST request
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Error Handling
+// Error Handling for 404 and 500
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.use(function(req, res){
     res.status(404);
-    res.render("404");
+    res.render('404');
 });
 
 app.use(function(err, req, res, next){
     console.log(err.stack);
     res.status(500);
-    res.render("500");
+    res.render('500');
 });
 
 
