@@ -1,0 +1,15 @@
+{
+  "name": "riot-api-demo",
+  "version": "1.0.0",
+  "description": "An introduction to some features offered by the Riot/League of Legends API",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FearJoy/CS290-webdev/tree/master/riot-api-demo"
+  },
+  "author": "John Fitzpatrick",
+  "license": "MIT"
+}
