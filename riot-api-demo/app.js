@@ -1,45 +1,98 @@
 
-// Port to be used
-var port = 3000;
 
-// Require stuff
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Set up middleware
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Import and init express
 var express = require("express");
-var bodyParser = require("body-parser");
-var handlebars = require("express-handlebars").create({defaultLayout:'main'});
-
-// Init express
 var app = express();
-app.engine('handlebars', handlebars.engine);
-app.set('port', port);
-var options = { root: __dirname + '/' };
 
-
-// Make express use body-parser as middleware
+// Import and init body-parser
+var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
 
-// Landing page, via main.hbs
-app.get('/', function(req,res) {
-    res.render('main');
+// Import and init express-handlebars
+var handlebars = require("express-handlebars").create({defaultLayout:'main'});
+
+// Init express rendering tools
+app.engine('handlebars', handlebars.engine);
+app.set('port', port);
+
+
+// Set static information for server
+var port = 3000;
+app.use(express.static(__dirname + '/public'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Error handling, codes from Riot Inc
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// 4XX Codes
+// Bad request
+app.use(function(req, res, next){
+    res.status(400);
+    res.render('400');
 });
 
-$(function() {
-    // Grab the template script
-    var theTemplateScript = $("#address-template").html();
+// Unauthorized
+app.use(function(req, res, next){
+    res.status(401);
+    res.render('401');
+});
 
-    // Compile the template
-    var theTemplate = Handlebars.compile(theTemplateScript);
+// Not Found
+app.use(function(req, res, next){
+    res.status(404);
+    res.render('404');
+});
 
-    // Define our data object
-    var context={
-        "city": "London",
-        "street": "Baker Street",
-        "number": "221B"
-    };
+// Unsupported Media Type
+app.use(function(req, res, next){
+    res.status(415);
+    res.render('415');
+});
 
-    // Pass our data to the template
-    var theCompiledHtml = theTemplate(context);
+// Rate limit exceeded
+app.use(function(req, res, next){
+    res.status(429);
+    res.render('429');
+});
 
-    // Add the compiled html to the page
-    $('.content-placeholder').html(theCompiledHtml);
+
+// 5XX Codes
+// Internal server error
+app.use(function(err, req, res, next){
+    console.error(err.stack);
+    res.status(500);
+    res.render('500');
+});
+
+// Service unavailable
+app.use(function(err, req, res, next){
+    console.error(err.stack);
+    res.status(503);
+    res.render('503');
+});
+
+
+
+
+
+// Set up listener
+app.listen(port, function() {
+    console.log('Started on port(' + port + '): ' + app.get('port') + ', Ctrl C to end.');
 });
