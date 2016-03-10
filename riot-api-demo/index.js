@@ -14,13 +14,16 @@ app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 // Import and init express-handlebars
-var handlebars = require('express-handlebars').create({ defaultLayout:'main' });
+var handlebars = require('express-handlebars').create({
+    defaultLayout: 'main',
+    extname: '.hbs'
+});
 
 
 
 // Init express rendering tools, listening port, and directory
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
+app.engine('hbs', handlebars.engine);
+app.set('view engine', 'hbs');
 var port = 3000;
 app.set('port', port);
 app.use(express.static(__dirname + '/'));
@@ -29,7 +32,7 @@ app.use(express.static(__dirname + '/'));
 
 // Render main page/landing
 app.get('/', function(req,res) {
-    res.render('views/main');
+    res.render('main');
 });
 
 
