@@ -1,34 +1,36 @@
-
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set up middleware
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Import and init express
-var express = require("express");
+var express = require('express');
 var app = express();
 
+
+
 // Import and init body-parser
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended:false}));
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 // Import and init express-handlebars
-var handlebars = require("express-handlebars").create({defaultLayout:'main'});
+var handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 
-// Init express rendering tools
+
+
+// Init express rendering tools, listening port, and directory
 app.engine('handlebars', handlebars.engine);
-app.set('port', port);
-
-
-// Set static information for server
+app.set('view engine', 'handlebars');
 var port = 3000;
-app.use(express.static(__dirname + '/public'));
+app.set('port', port);
+app.use(express.static(__dirname + '/'));
 
 
 
-
-
+// Render main page/landing
+app.get('/', function(req,res) {
+    res.render('views/main');
+});
 
 
 
@@ -87,9 +89,6 @@ app.use(function(err, req, res, next){
     res.status(503);
     res.render('503');
 });
-
-
-
 
 
 // Set up listener
