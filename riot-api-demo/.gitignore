@@ -1,6 +1,6 @@
 node_modules
 npm-debug.log
 server.js
-.idea/*
 .idea
 dragontail-6.5.1.tgz
+public/images/*
