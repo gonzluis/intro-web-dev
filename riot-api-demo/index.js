@@ -44,8 +44,13 @@ app.use(bodyParser.json());
 
 
 
-var myArgs = process.argv.slice(2); // [0] = node.... [1] = path of index.js
+var myArgs = process.argv; // [0] = node.... [1] = path of index.js
 console.log("myArgs: " + myArgs);
+console.log("myArgs 0:" + myArgs[0]);
+console.log("myArgs 1:" + myArgs[1]);
+console.log("myArgs 2:" + myArgs[2]);
+console.log("myArgs 3:" + myArgs[3]);
+
 
 
 
@@ -62,6 +67,7 @@ console.log("myArgs: " + myArgs);
 //      This has the potential to be reduced...
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
+    console.log("myArgs: " + myArgs);
     res.render('index');
     // any time a GET is received from the server, this runs
     // code can be looped here
