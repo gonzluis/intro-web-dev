@@ -1,7 +1,29 @@
-<h1>The Riot Games API</h1>
+<h1>Making API Calls</h1>
+<p class="lead">So much information for so little given</p>
 
-<p class="lead">What calls we will be using</p>
+<h3>API Documentation</h3>
+<p>Riot's documentation is extremely detailed. If you have a developer account, it can be found <a href="https://developer.riotgames.com/api/methods">here</a>. All of their methods are done by performing GET requests. Each item in the documentation specifies what to send, in what format to send it, and what to expect for each case in return. At the end of each method there is a tool to execute a sample request with current live data. It will show the JSON file you would receive.</p>
 
-<h3>Call 1</h3>
+<h3>The API Methods Used Here</h3>
+<p>We will be using two methods. Their official titles on the documentation page are <code>champion-v1.2</code> and <code>lol-static-data-v1.2</code>. Both method have multiple ways they can be called. I will go through the formatting for each call here, and in the next section we will begin making calls and using the data!</p>
 
-<p>call 2 in h3</p>
+<p>The items wrapped in <code>{ }</code> are <i>path parameters</i> and are used to define what exactly we are hoping to receive back. They are like options that can be toggled to filter what information is returned when we make the API call. There are also other parameters that can tacked on to the end of the path to further refine results.</p>
+
+<h3>champion-v1.2</h3>
+<p><code>champion-v1.2</code> has two ways that a call can be made. The first call uses <code>/api/lol/{region}/v1.2/champion</code> and returns a list of champions. The second call uses <code>/api/lol/{region}/v1.2/champion/{id}</code> and returns information from one champion. We will be using the first call.</p>
+
+<p>The method we will be using, <code>champion-v1.2</code>, to return a list of champions is <code>/api/lol/{region}/v1.2/champion</code>. Here we can see that there is only one path parameter, <code>{region}</code>. According to the API documentation, region can exist as any of the follow: [BR, EUNE, EUW, KR, LAN, LAS, NA, OCE, RU, TR]. Pro tip, each region represents the hosting servers that Riot uses around the world! For this guide I will always use the North American region, represented by "na".</p>
+
+
+<h3>lol-static-data-v1.2</h3>
+<p>This API method offers many more call options than champion-v1.2; the method has 15 in total. We will be using <code>/api/lol/static-data/{region}/v1.2/champion/{id}</code> to return data specific to one champion.</p>
+<p>
+    <ul>
+        <li><code>{region}</code>, again, this asks you what part of the world you want your data from. We will use "na".</li>
+        <li><code>{id}</code> is a champion's unique id. This id, along with other information, is returned by <code>champion-v1.2</code>.</li>
+    </ul>
+</p>
+
+
+<h3>Pathing Complete</h3>
+<p>So far, our call paths would/coukd look like this: <code>/api/lol/na/v1.2/champion</code> and <code>/api/lol/static-data/na/v1.2/champion/245</code>. Looks good! In the next section we will add some stuff on to the beginning and end of these paths to make useful things happen as well as discuss how data is returned.</p>
