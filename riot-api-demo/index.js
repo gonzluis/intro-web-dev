@@ -2,37 +2,69 @@
 // Set up middleware
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Import and init express
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Port to run server on
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+var port = 3000;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Require express and get it running
+// Require body-parser
+// Require express-handlebars and set it up
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 var express = require('express');
-var app = express();
-
-
-
-// Import and init body-parser
 var bodyParser = require('body-parser');
+var exphbs = require ('express-handlebars');
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// INIT express engine
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+var app = express();
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+app.set('port', port);
+app.use(express.static(__dirname + '/public'));
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Set express to use middleware(bodyParser)
+//    parse application/x-www-form-urlencoded = handle URL encoded submissions
+//    parse application/json = handle JSON submissions
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
-// Import and init express-handlebars
-var handlebars = require('express-handlebars').create({
-    defaultLayout: 'main',
-    extname: '.hbs'
-});
 
 
 
-// Init express rendering tools, listening port, and directory
-app.engine('hbs', handlebars.engine);
-app.set('view engine', 'hbs');
-var port = 3000;
-app.set('port', port);
-app.use(express.static(__dirname + '/'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 // Render main page/landing
 app.get('/', function(req,res) {
-    res.render('main');
+    res.render('index');
+    // any time a GET is received from the server, this runs
+    // code can be looped here
+    // basically any time the page is visited, this gets run
+
+
 });
 
 
