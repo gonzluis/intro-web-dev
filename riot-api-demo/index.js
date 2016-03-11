@@ -56,16 +56,40 @@ app.use(bodyParser.json());
 
 
 
-
-// Render main page/landing
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Functions to render each page
+//      This has the potential to be reduced...
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
     res.render('index');
     // any time a GET is received from the server, this runs
     // code can be looped here
     // basically any time the page is visited, this gets run
-
-
 });
+
+app.get('/page1', function(req,res) {
+    res.render('page1');
+});
+
+app.get('/page2', function(req,res) {
+    res.render('page2');
+});
+
+app.get('/page3', function(req,res) {
+    res.render('page3');
+});
+
+app.get('/page4', function(req,res) {
+    res.render('page4');
+});
+
+app.get('/page5', function(req,res) {
+    res.render('page5');
+});
+
+function apiFreeToPlay() {
+    var request = new XMLHttpRequest();
+}
 
 
 
