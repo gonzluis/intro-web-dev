@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 
 var myArgs = process.argv; // [0] = node.... [1] = path of index.js
 myArgs = process.argv.slice(2) // get third item in array
-console.log("myArgs 2:" + myArgs[2]);
+console.log("myArgs 2:" + myArgs);
 
 
 
@@ -66,6 +66,7 @@ console.log("myArgs 2:" + myArgs[2]);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
     res.render('index');
+    console.log(myArgs);
     // any time a GET is received from the server, this runs
     // code can be looped here
     // basically any time the page is visited, this gets run
