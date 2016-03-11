@@ -1,7 +1,35 @@
 <h1>Introduction to the Riot API and this Project</h1>
+<p class="lead">The best learning is done by doing</p>
 
-<p class="lead">Lead with stuff cuz bootstrap</p>
+<br>
 
-<h3>Project description</h3>
+<h3>School and Learning</h3>
+<p>This project was undertaken as part of a class I am taking at Oregon State University, CS290 - Web Development. The course covers topics such as HTML, JavaScript, and databases. The goal of this project is simple: to learn about an API I have no used before, and write a brief guide on how to use some of it.</p>
 
-<p>Why I chose this API</p>
+<h3>Any API</h3>
+<p>We were allowed to choose any API out in the wild, except for ones that were overly simple. Years ago I earned a degree in Economics, so numbers and statistics have always interested me. You could say I like quantifying seemingly meaningless or random data. I wanted to learn about an API that could help me get access to large data sets, but that was also interesting to be. I spent a lot of time in the past going through data about people that I knew I wanted to work with something more fun/light.</p>
+
+<p>I chose to use the Riot API because I had read about it before (though never used it). I am also a big League of Legends player myself. It offers diverse API calls, and can return things from simple data types to seriously huge JSON files. I knew that this was the one I wanted to be working with. <a href="https://developer.riotgames.com/">The Riot API</a> is free to use, and they do not present any paid options. From all of my readings into other APIs, this seemed odd considering all of the data that they could provide. There are some truly amazing sites out there that are created from this API - some do crazy tings with math and others show off the beauty and power of the web.</p>
+
+<p>Check out a few (points to specific pages so the examples are better):
+    <ul>
+        <li><a href="https://counterplay.xyz/lane/support/plat">Awesome data and charts</a></li>
+        <li><a href="http://www.op.gg/champion/Nautilus/">Beautiful and crams in a ton of information</a></li>
+        <li><a href="http://www.leagueofgraphs.com/infographics">Uses API calls and another tool to make infographics</a></li>
+    </ul>
+</p>
+
+<h3>On to the API Basics</h3>
+<p>The API is free to use with a developers account. Unfortunately you must have a League of Legends player account to link into the developer network. You can sign up for a player account <a href="https://signup.na.leagueoflegends.com/en/signup/index">here</a>. Once complete, head over to the <a href="https://developer.riotgames.com/sign-in">developers page</a> and register your player account as a developer too. Upon complete these two steps you should see your API on the landing page as well as the API rates.</p>
+
+<p>The developer's API has strict usage rates of
+    <ul>
+        <li>500 requests per 10 minutes (50/minute)</li>
+        <li>10 requests per 10 seconds (1/second)</li>
+    </ul>
+</p>
+
+<p>Earlier I mentioned that there is no paid option. The only other option is to apply for a production keey, which changes 100 and 10 to 180,000 and 3,000, respectively. But these developer keys should be enough to get us off the ground.</p>
+
+<h3>The Goal of this Project</h3>
+<p>My goal for this project is to show how two different API calls can be combined to create a meaningful web experience. In League of Legends there are over 110 characters, called champions, that the player can play. Remember how I said that Riot pulls in over $1 billion per year on this game? That is because not everything is free. When you first start playing you are given to own, for free, about 10 champions. Every week Riot will allow 12 champions to be played for free. These are called free to play or the weekly rotation. I will be using on API call to get a list of the free champions for this week, and then another call to get information specific to a champion according to it's ID. Basically we will be getting a list, then going through that list to get more details on each list item.</p>
