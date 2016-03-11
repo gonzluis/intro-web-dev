@@ -1,4 +1,11 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Store Args and API key
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+var myArgs = process.argv.slice(2);     // Remove first two items --- [0] = node.... [1] = path of index.js
+myArgs = myArgs[0];                     // Set myArgs to, now first, arg
+                                        // myArgs is now set to the API key
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set up middleware
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -16,6 +23,8 @@ var port = 3000;
 var express = require('express');
 var bodyParser = require('body-parser');
 var exphbs = require ('express-handlebars');
+var session = require('express-session');
+var request = require('request');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // INIT express engine
@@ -40,13 +49,34 @@ app.use(bodyParser.json());
 
 
 
+var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key= - - - - - - - - - - -';
+var champIdList = getIdList();
 
 
+function getIdList() {
+    var length;
+    request(payload, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            champIdList = JSON.parse(response.body);
+            length = champIdList.champions.length;
 
+            console.log(champIdList.champions[0]);
+            console.log(champIdList.champions[0].id);
+            console.log(champIdList.champions[0].active);
+            console.log(champIdList.champions[0].botEnabled);
+            console.log(champIdList.champions[0].botMmEnabled);
+            console.log(champIdList.champions[0].rankedPlayEnabled);
 
-var myArgs = process.argv.slice(2);     // Remove first two items --- [0] = node.... [1] = path of index.js
-myArgs = myArgs[0];                     // Set myArgs to, now first, arg
-console.log("myArgs[0]:" + myArgs);     // Log for testing
+            var list = new Array(length);
+
+            for (var i = 0; i < length; i++) {
+                console.log(champIdList.champions[i].id);
+                list[i] = champIdList.champions[i].id;
+            }
+            return list;
+        }
+    });
+}
 
 
 
@@ -66,7 +96,6 @@ console.log("myArgs[0]:" + myArgs);     // Log for testing
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
     res.render('index');
-    console.log(myArgs);
     // any time a GET is received from the server, this runs
     // code can be looped here
     // basically any time the page is visited, this gets run
@@ -91,17 +120,6 @@ app.get('/page4', function(req,res) {
 app.get('/page5', function(req,res) {
     res.render('page5');
 });
-
-function apiFreeToPlay() {
-    var request = new XMLHttpRequest();
-}
-
-
-
-
-
-
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Error handling, codes from Riot Inc
