@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 
 
 
-var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key= - - - - - - - - - - -';
+var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=' + myArgs;
 var champIdList = getIdList();
 
 
