@@ -44,8 +44,8 @@ app.use(bodyParser.json());
 
 
 
-var key = process.argv.slice(2);
-console.log("var key is: " + key);
+var myArgs = process.argv.slice(2); // [0] = node.... [1] = path of index.js
+console.log("myArgs: " + myArgs);
 
 
 
@@ -63,7 +63,6 @@ console.log("var key is: " + key);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
     res.render('index');
-    console.log(key);
     // any time a GET is received from the server, this runs
     // code can be looped here
     // basically any time the page is visited, this gets run
