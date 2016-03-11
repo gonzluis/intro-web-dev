@@ -44,7 +44,8 @@ app.use(bodyParser.json());
 
 
 
-
+var key = process.argv.slice(2);
+console.log("var key is: " + key);
 
 
 
