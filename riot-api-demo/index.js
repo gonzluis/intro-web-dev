@@ -44,9 +44,9 @@ app.use(bodyParser.json());
 
 
 
-var myArgs = process.argv; // [0] = node.... [1] = path of index.js
-myArgs = process.argv.slice(2) // get third item in array
-console.log("myArgs 2:" + myArgs);
+var myArgs = process.argv.slice(2);     // Remove first two items --- [0] = node.... [1] = path of index.js
+myArgs = myArgs[0];                     // Set myArgs to, now first, arg
+console.log("myArgs[0]:" + myArgs);     // Log for testing
 
 
 
