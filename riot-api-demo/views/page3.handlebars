@@ -1,7 +1,159 @@
 <h1>Getting Started with it All</h1>
+<p class="lead">The first step is always the scariest</p>
 
-<p class="lead">Let's have some super mega doses of fun!</p>
+<h3>Making our First Call with champion-v1.2</h3>
+<p>So far we have out path set up as <code>/api/lol/na/v1.2/champion</code>, but this is only partial. First, we must add a prefix, <code>https://na.api.pvp.net</code>. this will allow us to talk to the actual server the receives the API calls. Next, we can add a few things to the end ro filter our response data. Riot's documentation is weak here.</p>
 
-<h3>Make call</h3>
+<p>This post-fix data is specific to champion-v1.2
+    <ul>
+        <li><code>?freeToPlay={bool}</code>The returned list will only hold champions that are currently free to play. Make this true</li>
+        <li><code>api_key={key}</code>Insert your API key here!</li>
+        <li><code>&</code>Used to separate items after the API parameter path</li>
+    </ul>
+</p>
 
-<p>Parse data</p>
+<p>The formula: <code>HTTP Prefix</code> + <code>API parameter path</code> + <code>Free to play boolean</code> + <code>Separator</code> + <code>API key</code></p>
+<p>Plugging it in:<code>https://na.api.pvp.net</code> + <code>/api/lol/na/v1.2/champion</code> + <code>?freeToPlay={bool}</code> + <code>&</code> + <code>api_key=12345-67890-abcd</code></p>
+<p>And combined: <code>https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=12345-67890-abcd</code></p>
+<p>If you have an API key you can substitute your key in and paste the link into a new browser window. Below is an example of the returned data from this call:</p>
+
+
+<p><a class="lead" href="/examples/champion-v1.2.json">champion-v1.2.json</a>
+    <pre class="prettyprint pre-scrollable">
+    {"champions": [
+  {
+    "botMmEnabled": true,
+    "id": 53,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 69,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": false,
+    "id": 245,
+    "rankedPlayEnabled": true,
+    "botEnabled": false,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 89,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 21,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 62,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 2,
+    "rankedPlayEnabled": true,
+    "botEnabled": false,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": false,
+    "id": 98,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 102,
+    "rankedPlayEnabled": true,
+    "botEnabled": true,
+    "active": true,
+    "freeToPlay": true
+  },
+  {
+    "botMmEnabled": true,
+    "id": 67,
+    "rankedPlayEnabled": true,
+    "botEnabled": false,
+    "active": true,
+    "freeToPlay": true
+  }
+]}
+</pre>
+
+<h3>Review It</h3>
+<p>So now we have a pretty cool data set, but what does all of it mean and how can we use it? Let's first get through what all of the key/vlaues mean. Riot covers this well, but I will go through it still.
+    <ul>
+        <li><code>botMmEnabled</code> - <i>bool</i> - the champion can be played by the computer in Co-op vs AI games</li>
+        <li><code>id</code> - <i>int</i> - refers to the champion's unique id</li>
+        <li><code>rankedPlayEnabled</code> - <i>bool</i> - flag to indicate if the champion is allowed in ranked/ladder games</li>
+        <li><code>botEnabled</code> - <i>bool</i> - flag indicating if the champion can be played by a bot in a custom game</li>
+        <li><code>freeToPlay</code> - <i>bool</i> - represents if the character is currently free to play</li>
+    </ul>
+We are currently interested in <i>only</i> <code>id</code>. We can ignore <code>freeToPlay</code> flag since our API method call asked only for the current champions that are free to play. Efficient.</p>
+
+<h3>Got It, Now Use It</h3>
+<pre class="prettyprint pre-scrollable">
+// Use request to make the calls easier to make and handle --> npm install request --save
+var request = require('request');
+var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=12345-67890-abcde';
+
+// Send the GET request with the URL you have built
+request(payload, function (error, response, body) {
+
+    // Make sure no error codes were thrown
+    if (!error && response.statusCode == 200) {
+
+        // Access the data
+        var champList = JSON.parse(response.body);
+        console.log(champList);                                 // Prints the entire JSON response, see above snippet
+        console.log(champList.champions[0]);                    // Prints the first JSON object
+        console.log(champList.champions[0].id);                 // Get's id of the first object
+        console.log(champList.champions[0].active);             // Get first object other attributes
+        console.log(champList.champions[0].botEnabled);
+        console.log(champList.champions[0].botMmEnabled);
+        console.log(champList.champions[0].rankedPlayEnabled);
+    }
+});
+</pre>
+<p>The data returned is a list of objects. First let's declare a list to store the JSON data and assign it to the JSON parsed data, <code>var champList = JSON.parse(response.body);</code>. To access the first champion object, you can use <code>champList.champions[0]</code>. From there you can add things like <code>.id</code> to get the id or <code>rankedPlayEnabled</code> to get the ranked play flag. We will only be using id.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Disclaimer</h3>
+<p>I will not be sharing my API key with you for this walk through, for obvious reasons. But rest assured that my web app does successfully make calls and parse the data. <a href="https://github.com/FearJoy/CS290-webdev/tree/master/riot-api-demo">My repository</a>on GitHub shows all of my code. Feel free to download it and try it for yourself. It can be downloaded and set up by running <code>npm install</code> in the directory that <code>package.json</code> is found. This will get everything set up for you.</p>
+
+<p>Absolute links to the files for jQuery and bootstrap were used to simplify thew development process.</p>
