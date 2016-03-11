@@ -63,6 +63,7 @@ console.log("var key is: " + key);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app.get('/', function(req,res) {
     res.render('index');
+    console.log(key);
     // any time a GET is received from the server, this runs
     // code can be looped here
     // basically any time the page is visited, this gets run
