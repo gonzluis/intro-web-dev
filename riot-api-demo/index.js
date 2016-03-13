@@ -25,6 +25,7 @@ var bodyParser = require('body-parser');
 var exphbs = require ('express-handlebars');
 var session = require('express-session');
 var request = require('request');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // INIT express engine
@@ -44,57 +45,52 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
-
-
-
-
-
-var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=da6c4ff2-1609-4427-aa38-1de54cb7a151';
+var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=' + myArgs;
 var champIdList = new Array(12);
 champIdList = getIdList();
-
 
 function getIdList() {
     var length;
 
-
     request(payload, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             champIdList = JSON.parse(response.body);
+
             length = champIdList.champions.length;
 
-            //console.log(champIdList.champions[0]);
-            //console.log(champIdList.champions[0].id);
-
             var list = new Array(length);
+
             for (var i = 0; i < length; i++) {
-                //console.log(champIdList.champions[i].id);
-                list[i] = champIdList.champions[i].id;
+
+                list[i] = champIdList.champions[i];
             }
             return list;
         }
     });
 }
 
-function makeAPICall(url, callback) {
-    var req = new XMLHttpRequest();
-    req.open("GET", url, true);
-    req.addEventListener("load", function() {
-        if(req.status < 400)
-            callback(req.responseText)
-        else
-            callback(null, new Error("Request failed: " + req.statusText))
+setTimeout(function() {
+    console.log(champIdList);
+    console.log("~ ~ ~ ~ ~ ~ ~ ");
+}, (2 * 1000));
+
+var champion = new Array(7);
+champion = getChampion(62);
+
+function getChampion(id) {
+    var payload = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/' + id + '?champData=blurb,info,tags&api_key=' + myArgs;
+    request(payload, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            champion = JSON.parse(response.body);
+            return champion;
+        }
     });
-    req.addEventListener("error", function() {
-        callback(null, new Error("Network error"));
-    });
-    req.send(null);
-    JSON.parse(req.responseText);
 }
 
-var APIresults = makeAPICall(payload);
-console.log(APIresults);
-
+setTimeout(function() {
+    console.log(champion);
+    console.log("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
+}, (2 * 1000));
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -162,7 +158,6 @@ app.use(function(req, res, next){
     res.status(429);
     res.render('429');
 });
-
 
 // 5XX Codes
 // Internal server error

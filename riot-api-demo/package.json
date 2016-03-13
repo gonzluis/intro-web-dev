@@ -14,7 +14,8 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.11.3",
     "jquery": "^2.2.1",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "author": "John Fitzpatrick",
   "license": "MIT"
