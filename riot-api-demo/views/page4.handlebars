@@ -2,14 +2,60 @@
 <p class="lead">This is where the magic happens</p>
 
 <h3>Using the List to Get More Data</h3>
-<p>paragraph</p>
+<p>We now have a list of 10 integers, representing 10 champions by their unique ID's. What can we do with this? Well, Riot has an API call that returns any and all information related to a champion. All you have to do is hand over the ID in a formatted URL. The call method used is <code>/api/lol/static-data/{region}/v1.2/champion/{id}</code>. Obviously we will need to had some information before and after that path to get any thing useful. We will be using the "na" region again. Are a lot of options to add to the end of this call. I will only be focusing on a few.</p>
 
+<ul>
+    <li><code>https://global.api.pvp.net</code> - Add this before so you can talk to a server. All following items are added on the end</li>
+    <li><code>?champData={param}</code> - params are listed after champ data, separated by commas. We will be using:</li>
+    <ul>
+        <li><code>blurb</code> - Returns a short description of the champion</li>
+        <li><code>info</code> - Returns basic champion characteristics (magic power, defense, etc)</li>
+        <li><code>tags</code> - Returns the character classes that the champion falls into (tank, fighter, mage, etc)</li>
+    </ul>
+    <li><code>&api_key=12345-6789-abcde</code></li>
+</ul>
 
+<p>Our full call will end up being <code>https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/{id}?champData=blurb,info,tags&api_key=12345-6789-abcde</code>. We can use a short Javascript loop to call for each ID. Let's set champion ID to 62 and see what we get!</p>
 
+<pre class="prettyprint pre-scrollable">
+{
+   "tags": [
+      "Fighter",
+      "Tank"
+   ],
+   "id": 62,
+   "title": "the Monkey King",
+   "name": "Wukong",
+   "blurb": "During the chaos of the Rune Wars, an enormous runestone was lost deep within the Plague Jungles. It remained there, untouched for centuries, emanating a potent magic which infused nearby wildlife with sentience and vitality. A group of monkeys who ...",
+   "key": "MonkeyKing",
+   "info": {
+      "defense": 5,
+      "magic": 2,
+      "difficulty": 3,
+      "attack": 8
+   }
+}
+</pre>
+<h3>This is SO Awesome!</h3>
+<p>Let's put some code down and walk through what is happening to see the magic in it.</p>
 
+<pre class="prettyprint pre-scrollable">
+function getChampion(id) {
+    var payload = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/' + id + '?champData=blurb,info,tags&api_key=12345-6789-abcde';
+    request(payload, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            champion = JSON.parse(response.body);
+            return champion;
+        }
+    });
+}
+</pre>
 
+<p>We can access this information with, say, <code>var champion = getChampion(id)</code>. Now champion is filled with information and it can be accessed by adding <code>.tags</code> or <code>.info.attack</code>, or by using any of the other key names.</p>
 
+<p>Here we have a function that takes an integer as a parameter and returns a formatted JSON object. Isn't that like the previous page? Pretty much. But it wouldn't take much more work to get the data for every champion that is free to play, and then make a quick web app that displays all free to play champions along with basic information!</p>
 
+<p>This example shows that API calls alone only go so far, but being able to combine data from multiple calls can offer creative solutions to any challenge. This could even be applied to multiple APIs!</p>
 
 <p class="text-center">
     <a href="/page3"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Previous Page</a> | <a href="/page5">Next Page <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
