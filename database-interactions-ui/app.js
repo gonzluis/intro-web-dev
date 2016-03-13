@@ -7,7 +7,6 @@ var port = 3000;
 // All requires
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 var express = require('express');
-var express = require('express');
 var bodyParser = require('body-parser');
 var exphbs = require ('express-handlebars');
 var session = require('express-session');
@@ -21,7 +20,7 @@ var app = express();
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.set('port', port);
-app.use(express.static(__dirname + '/'));
+app.use(express.static(__dirname + '/public'));
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set express to use middleware(bodyParser)
