@@ -135,10 +135,11 @@ We are currently interested in <i>only</i> <code>id</code>. We can ignore <code>
 <pre class="prettyprint pre-scrollable">
     var list = new Array(length);
     for (var i = 0; i < length; i++) {
-        console.log(champIdList.champions[i].id);
-        list[i] = champIdList.champions[i].id;
+        console.log(champIdList.champions[i].id);   // Printing for error proofing
+        list[i] = champIdList.champions[i].id;      // ID stored at champIdList.champions[i].id
     }
 </pre>
+<p>Now that we have each ID stored, we can make another call to rather some information on the champions that are free to play this week!</p>
 
 
 <p class="text-center">
