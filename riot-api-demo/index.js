@@ -49,28 +49,26 @@ app.use(bodyParser.json());
 
 
 
-var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=' + myArgs;
-var champIdList = getIdList();
+var payload = 'https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=da6c4ff2-1609-4427-aa38-1de54cb7a151';
+var champIdList = new Array(12);
+champIdList = getIdList();
 
 
 function getIdList() {
     var length;
+
+
     request(payload, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             champIdList = JSON.parse(response.body);
             length = champIdList.champions.length;
 
-            console.log(champIdList.champions[0]);
-            console.log(champIdList.champions[0].id);
-            console.log(champIdList.champions[0].active);
-            console.log(champIdList.champions[0].botEnabled);
-            console.log(champIdList.champions[0].botMmEnabled);
-            console.log(champIdList.champions[0].rankedPlayEnabled);
+            //console.log(champIdList.champions[0]);
+            //console.log(champIdList.champions[0].id);
 
             var list = new Array(length);
-
             for (var i = 0; i < length; i++) {
-                console.log(champIdList.champions[i].id);
+                //console.log(champIdList.champions[i].id);
                 list[i] = champIdList.champions[i].id;
             }
             return list;
@@ -78,15 +76,24 @@ function getIdList() {
     });
 }
 
+function makeAPICall(url, callback) {
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.addEventListener("load", function() {
+        if(req.status < 400)
+            callback(req.responseText)
+        else
+            callback(null, new Error("Request failed: " + req.statusText))
+    });
+    req.addEventListener("error", function() {
+        callback(null, new Error("Network error"));
+    });
+    req.send(null);
+    JSON.parse(req.responseText);
+}
 
-
-
-
-
-
-
-
-
+var APIresults = makeAPICall(payload);
+console.log(APIresults);
 
 
 
