@@ -4,7 +4,7 @@
 var port = 3001;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// All requires
+// All requires for this project
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -34,9 +34,9 @@ app.use(bodyParser.json());
 // Set up database connection
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 var pool = mysql.createPool({
-    connectionLimit	: 10,
-    host  			: 'localhost',
-    user  			: 'student',
+    connectionLimit	    : 10,
+    host  			    : 'localhost',
+    user  			    : 'student',
     password			: 'default',
     database			: 'student'
 });
@@ -44,25 +44,23 @@ var pool = mysql.createPool({
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set up database table
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// default page
+// Default page
 app.get('/', function(req, res) {
     var context = {};
-    pool.query('SELECT * FROM workouts', function(err, rows, fields){
-        if(err){
+    pool.query('SELECT * FROM workouts', function(err, rows, fields) {
+        if (err)
             next(err);
-            return;
-        }
-        context.dataList = rows;
+
+        context.data = rows;
         console.log(context);
         res.render('home', context);
     });
 });
 
-// delete table then re-init table
+// Delete table then re-init table, provided from instructor
 app.get('/reset-table',function(req, res, next) {
     var context = {};
-    pool.query("DROP TABLE IF EXISTS workouts", function(err){
+    pool.query("DROP TABLE IF EXISTS workouts", function(err) {
 
         var createString = "CREATE TABLE workouts("+
             "id INT PRIMARY KEY AUTO_INCREMENT,"+
@@ -78,7 +76,7 @@ app.get('/reset-table',function(req, res, next) {
     });
 });
 
-// delete exercise by id number
+// Delete exercise by id number
 app.get('/delete', function(req, res, next) {
     var context = {};
     pool.query("DELETE FROM workouts WHERE id=?", [req.query.id], function(err, res) {
@@ -89,12 +87,13 @@ app.get('/delete', function(req, res, next) {
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
         if (err)
             next(err);
-        context.dataList = rows;
+
+        context.data = rows;
         res.render('home', context);
     });
 });
 
-// add exercise
+// Add exercise to the table
 app.get('/add', function(req, res, next) {
    var context = {};
     pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, res) {
@@ -105,24 +104,25 @@ app.get('/add', function(req, res, next) {
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
        if (err)
            next(err);
-        context.dataList = rows;
+
+        context.data = rows;
         console.log(context);
         res.render('home', context);
     });
 });
 
-// edit a row
+// Edit a row by id number
 app.get('/edit', function(req, res, next) {
     var context = {};
     pool.query("SELECT * FROM workouts WHERE id=?", [req.query.id], function(err, rows, fields){
         if(err)
             next(err);
-        context.dataList = rows;
+        context.data = rows;
         res.render('edit', context);
     });
 });
 
-// post edit via an update
+// Post edit via an update with an id number
 app.get('/update', function(req, res, next) {
     var context = {};
     pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id = ?", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){
@@ -133,14 +133,10 @@ app.get('/update', function(req, res, next) {
         if (err)
             next(err);
 
-        context.dataList = rows;
+        context.data = rows;
         res.render('home', context);
     });
 });
-
-
-
-
 
 
 
