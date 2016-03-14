@@ -81,8 +81,10 @@ app.get('/reset-table',function(req,res,next){
 app.get('/delete', function(req, res, next) {
     var context = {};
     pool.query("DELETE FROM workouts WHERE id = ?", [req.query.id], function(err, res) {
-        next(err);
-        return;
+        if(err) {
+            next(err);
+            return;
+        }
     });
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
         if (err) {
