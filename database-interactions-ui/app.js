@@ -44,6 +44,21 @@ var pool = mysql.createPool({
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set up database table
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// default page
+app.get('/', function(req, res, next) {
+    var context = {};
+    pool.query('SELECT * FROM workouts', function(err, rows, fields){
+        if(err){
+            next(err);
+            return;
+        }
+        context.dataList = rows;
+        res.render('home', context);
+    });
+});
+
+
 app.get('/reset-table',function(req,res,next){
     var context = {};
     pool.query("DROP TABLE IF EXISTS workouts", function(err){
@@ -67,24 +82,10 @@ app.get('/reset-table',function(req,res,next){
 
 
 
-
-// default page
-app.get('/', function(req, res, next) {
-    var context = {};
-    pool.query('SELECT * FROM workouts', function(err, rows, fields){
-        if(err){
-            next(err);
-            return;
-        }
-        context.dataList = rows;
-        res.render('home', context);
-    });
-});
-
 // add exercise
-app.get('/add', function(res,req,next) {
+app.get('/add', function(res, req, next) {
    var context = {};
-    pool.query('INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `type`) VALUES (?,?,?,?,?)',
+    pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)",
         [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, res) {
             if (err) {
                 next(err);
@@ -97,6 +98,7 @@ app.get('/add', function(res,req,next) {
            return;
        }
         context.dataList = rows;
+        console.log(context);
         res.render('home', context);
     });
 });
