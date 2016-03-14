@@ -120,7 +120,7 @@ app.get('/add', function(req, res, next) {
 // edit a row
 app.get('/edit', function(req, res, next) {
     var context = {};
-    mysql.pool.query("SELECT * FROM workouts WHERE id=?", [req.query.id], function(err, rows, fields){
+    pool.query("SELECT * FROM workouts WHERE id=?", [req.query.id], function(err, rows, fields){
         if(err){
             next(err);
             return;
