@@ -64,18 +64,18 @@
 
 
 
-<h2>Workouts</h2>
-<table>
-    <tr>
-        <td>Workouts</td>
-    </tr>
-    <tr>
-        <td>Name</td>
-        <td>Reps</td>
-        <td>Weight</td>
-        <td>Date</td>
-        <td>LBs</td>
-    </tr>
+<h3>Workout Log</h3>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Reps</th>
+            <th>Weight</th>
+            <th>Date</th>
+            <th>Mass</th>
+        </tr>
+    </thead>
+
     {{#each dataList}}
         <tr>
             <td>{{this.name}}</td>
@@ -86,11 +86,11 @@
             <td>
                 <form action="/delete" method="get">
                     <input type="hidden" name="id" value="{{this.id}}">
-                    <button>Delete Exercise</button>
+                    <button>Delete</button>
                 </form>
                 <form action="/update" method="get">
                     <input type="hidden" name="id" value="{{this.id}}">
-                    <button>Update Exercise</button>
+                    <button>Update</button>
                 </form>
             </td>
         </tr>
