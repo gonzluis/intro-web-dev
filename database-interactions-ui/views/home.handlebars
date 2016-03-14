@@ -1,19 +1,67 @@
-<form action="/insert" method="get">
-    Name:<br>
-    <input type="text" name="c"><br>
-    Number of reps:<br>
-    <input type="number" name="reps"><br>
-    Amount of weight:<br>
-    <input type="number" name="weight"><br>
-    Date:<br>
-    <input type="date" name="date"><br>
-    System: <br>
-    <select name="lbs">
-        <option value="0">metric</option>
-        <option value="1">imperial</option>
-    </select><br>
-    <button>Add Exercise</button>
+<form class="form-horizontal" action="/insert" method="get">
+    <!-- name field -->
+    <div class="form-group">
+        <label for="c" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="c" placeholder="Enter your name here">
+        </div>
+    </div>
+
+
+    <!-- rep field -->
+    <div class="form-group">
+        <label for="reps" class="col-sm-2 control-label">Reps</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="reps" placeholder="Enter the number of repetitions performed">
+        </div>
+    </div>
+
+
+    <!-- weight field -->
+    <div class="form-group">
+        <label for="weight" class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="weight" placeholder="Enter the weight used">
+        </div>
+    </div>
+
+
+    <!-- weight type field -->
+    <div class="radio">
+        <label class="radio-inline col-sm-3 control-label">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> lbs
+        </label>
+
+        <label class="radio-inline col-sm-1 control-label">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0"> kg
+        </label>
+    </div>
+    <br>
+
+
+    <!-- date field -->
+    <div class="form-group">
+        <label for="date" class="col-sm-2 control-label">Date</label>
+        <div class="col-sm-5">
+            <input type="date" class="form-control" name="date" placeholder="Enter date">
+        </div>
+    </div>
+
+
+    <!-- submit button -->
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Add to log</button>
+        </div>
+    </div>
+
 </form>
+
+
+
+
+
+
 
 
 <h2>Workouts</h2>
