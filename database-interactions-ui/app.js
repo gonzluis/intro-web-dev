@@ -117,7 +117,20 @@ app.get('/add', function(req, res, next) {
     });
 });
 
-// edit existing exercise
+// edit a row
+app.get('/edit', function(req, res, next) {
+    var context = {};
+    mysql.pool.query("SELECT * FROM workouts WHERE id=?", [req.query.id], function(err, rows, fields){
+        if(err){
+            next(err);
+            return;
+        }
+        context.dataList = rows;
+        res.render('edit', context);
+    });
+});
+
+// post edit via an update
 app.get('/update', function(req, res, next) {
     var context = {};
     pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){

@@ -1,0 +1,79 @@
+{{#each dataList}}
+    <form action="/update" method="get">
+        Name of exercise:<br>
+        <input type="text" name="name" value="{{this.name}}"><br>
+        Number of reps:<br>
+        <input type="number" name="reps" value="{{this.reps}}"><br>
+        Amount of weight:<br>
+        <input type="number" name="weight" value="{{this.weight}}"><br>
+        Date:<br>
+        <input type="date" name="date" value="{{this.date}}"><br>
+        Systame:<br>
+        <select name="lbs" value="{{this.lbs}}">
+            <option value="0">metric</option>
+            <option value="1">imperial</option>
+        </select><br>
+        <input type="hidden" name="id" value="{{this.id}}">
+        <button>Update</button>
+    </form>
+{{/each}}
+
+
+<form class="form-horizontal" action="/update" method="get">
+    <!-- name field -->
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="name" value="{{this.name}}">
+        </div>
+    </div>
+
+
+    <!-- rep field -->
+    <div class="form-group">
+        <label for="reps" class="col-sm-2 control-label">Reps</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="reps" value="{{this.reps}}">
+        </div>
+    </div>
+
+
+    <!-- weight field -->
+    <div class="form-group">
+        <label for="weight" class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="weight" value="{{this.weight}}">
+        </div>
+    </div>
+
+
+    <!-- weight type field -->
+    <div class="radio">
+        <label for="lbs" class="radio-inline col-sm-3 control-label">
+            <input type="radio" name="lbs" id="inlineRadio1" value="1"> lbs
+        </label>
+
+        <label for="lbs" class="radio-inline col-sm-1 control-label">
+            <input type="radio" name="lbs" id="inlineRadio1" value="0"> kg
+        </label>
+    </div>
+    <br>
+
+
+    <!-- date field -->
+    <div class="form-group">
+        <label for="date" class="col-sm-2 control-label">Date</label>
+        <div class="col-sm-5">
+            <input type="date" class="form-control" name="date" value="{{this.date}}">
+        </div>
+    </div>
+
+
+    <!-- submit button -->
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" value="{{this.id}}">Update workout</button>
+        </div>
+    </div>
+
+</form>
