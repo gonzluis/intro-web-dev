@@ -87,7 +87,7 @@ app.get('/reset-table',function(req,res,next){
 // add exercise
 app.get('/add', function(req, res, next) {
    var context = {};
-    pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, result) {
+    pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, res) {
             if (err) {
                 next(err);
                 return;
