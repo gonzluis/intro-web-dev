@@ -60,7 +60,6 @@ app.get('/', function(req, res, next) {
     });
 });
 
-
 app.get('/reset-table',function(req,res,next){
     var context = {};
     pool.query("DROP TABLE IF EXISTS workouts", function(err){
@@ -79,7 +78,22 @@ app.get('/reset-table',function(req,res,next){
     });
 });
 
-
+app.get('/delete', function(req, res, next) {
+    var context = {};
+    pool.query("DELETE FROM workouts WHERE id = ?", [req.query.id], function(err, res) {
+        next(err);
+        return;
+    });
+    pool.query('SELECT * FROM workouts', function(err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.dataList = rows;
+        console.log(context);
+        res.render('home', context);
+    });
+});
 
 
 
