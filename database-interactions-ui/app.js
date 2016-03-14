@@ -120,7 +120,7 @@ app.get('/add', function(req, res, next) {
 // edit existing exercise
 app.get('/update', function(req, res, next) {
     var context = {};
-    pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?", [req.query.c, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){
+    pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){
         if(err) {
             next(err);
             return;
