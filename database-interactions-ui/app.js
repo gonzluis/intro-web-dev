@@ -90,7 +90,6 @@ app.get('/delete', function(req, res, next) {
             return;
         }
         context.dataList = rows;
-        console.log(context);
         res.render('home', context);
     });
 });
