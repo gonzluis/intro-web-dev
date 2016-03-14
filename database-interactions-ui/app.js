@@ -82,16 +82,13 @@ app.get('/reset-table',function(req, res, next) {
 app.get('/delete', function(req, res, next) {
     var context = {};
     pool.query("DELETE FROM workouts WHERE id=?", [req.query.id], function(err, res) {
-        if(err) {
+        if(err)
             next(err);
-            return;
-        }
+
     });
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
-        if (err) {
+        if (err)
             next(err);
-            return;
-        }
         context.dataList = rows;
         res.render('home', context);
     });
@@ -101,16 +98,13 @@ app.get('/delete', function(req, res, next) {
 app.get('/add', function(req, res, next) {
    var context = {};
     pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, res) {
-        if (err) {
+        if (err)
             next(err);
-            return;
-        }
+
     });
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
-       if (err) {
+       if (err)
            next(err);
-           return;
-       }
         context.dataList = rows;
         console.log(context);
         res.render('home', context);
@@ -121,10 +115,8 @@ app.get('/add', function(req, res, next) {
 app.get('/edit', function(req, res, next) {
     var context = {};
     pool.query("SELECT * FROM workouts WHERE id=?", [req.query.id], function(err, rows, fields){
-        if(err){
+        if(err)
             next(err);
-            return;
-        }
         context.dataList = rows;
         res.render('edit', context);
     });
@@ -132,18 +124,15 @@ app.get('/edit', function(req, res, next) {
 
 // post edit via an update
 app.get('/update', function(req, res, next) {
-    var context = res[0];
-    pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id = ?", [req.query.name || context.name, req.query.reps || context.reps, req.query.weight || context.weight, req.query.date || context.date, req.query.lbs || context.lbs, req.query.id], function(err, res){
-        if(err) {
+    var context = {};
+    pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id = ?", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){
+        if(err)
             next(err);
-            return;
-        }
     });
     pool.query("SELECT * FROM workouts", function(err, rows, fields){
-        if (err) {
+        if (err)
             next(err);
-            return;
-        }
+
         context.dataList = rows;
         res.render('home', context);
     });
