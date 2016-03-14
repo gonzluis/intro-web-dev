@@ -59,6 +59,7 @@ app.get('/', function(req, res) {
     });
 });
 
+// delete table then re-init table
 app.get('/reset-table',function(req, res, next) {
     var context = {};
     pool.query("DROP TABLE IF EXISTS workouts", function(err){
@@ -77,6 +78,7 @@ app.get('/reset-table',function(req, res, next) {
     });
 });
 
+// delete exercise by id number
 app.get('/delete', function(req, res, next) {
     var context = {};
     pool.query("DELETE FROM workouts WHERE id=?", [req.query.id], function(err, res) {
@@ -91,22 +93,18 @@ app.get('/delete', function(req, res, next) {
             return;
         }
         context.dataList = rows;
-        console.log("delete clicked, req.query.id is: " + req.query.id);
         res.render('home', context);
     });
 });
-
-
-
 
 // add exercise
 app.get('/add', function(req, res, next) {
    var context = {};
     pool.query("INSERT INTO workouts (`name`, `reps`, `weight`, `date`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.query.name, req.query.reps, req.query.weight, req.query.date, req.query.type], function(err, res) {
-            if (err) {
-                next(err);
-                return;
-            }
+        if (err) {
+            next(err);
+            return;
+        }
     });
     pool.query('SELECT * FROM workouts', function(err, rows, fields) {
        if (err) {
@@ -119,6 +117,24 @@ app.get('/add', function(req, res, next) {
     });
 });
 
+// edit existing exercise
+app.get('/update', function(req, res, next) {
+    var context = {};
+    pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?", [req.query.c, req.query.reps, req.query.weight, req.query.date, req.query.lbs, req.query.id], function(err, res){
+        if(err) {
+            next(err);
+            return;
+        }
+    });
+    pool.query("SELECT * FROM workouts", function(err, rows, fields){
+        if (err) {
+            next(err);
+            return;
+        }
+        context.dataList = rows;
+        res.render('home', context);
+    });
+});
 
 
 
