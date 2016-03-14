@@ -42,7 +42,7 @@ var pool = mysql.createPool({
 });
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Set up database table
+// Functions used to render various parts of the page on event fire
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Default page
 app.get('/', function(req, res) {
