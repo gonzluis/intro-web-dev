@@ -54,6 +54,8 @@ app.get('/', function(req, res, next) {
             return;
         }
         context.dataList = rows;
+        console.log(context);
+        console.log(context.dataList);
         res.render('home', context);
     });
 });
