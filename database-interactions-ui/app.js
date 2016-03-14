@@ -46,7 +46,7 @@ var pool = mysql.createPool({
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // default page
-app.get('/', function(req, res, next) {
+app.get('/', function(req, res) {
     var context = {};
     pool.query('SELECT * FROM workouts', function(err, rows, fields){
         if(err){
@@ -60,7 +60,7 @@ app.get('/', function(req, res, next) {
     });
 });
 
-app.get('/reset-table',function(req,res,next){
+app.get('/reset-table',function(req, res, next) {
     var context = {};
     pool.query("DROP TABLE IF EXISTS workouts", function(err){
 
@@ -80,7 +80,7 @@ app.get('/reset-table',function(req,res,next){
 
 app.get('/delete', function(req, res, next) {
     var context = {};
-    pool.query("DELETE FROM workouts WHERE id = ?", [req.query.id], function(err, res) {
+    pool.query("DELETE FROM workouts WHERE id=?", [req.query.id], function(err, res) {
         if(err) {
             next(err);
             return;
@@ -92,6 +92,7 @@ app.get('/delete', function(req, res, next) {
             return;
         }
         context.dataList = rows;
+        console.log("delete clicked, req.query.id is: " + req.query.id);
         res.render('home', context);
     });
 });
